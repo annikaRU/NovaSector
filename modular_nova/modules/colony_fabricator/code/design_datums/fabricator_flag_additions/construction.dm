@@ -72,7 +72,7 @@
 	. = ..()
 	build_type |= COLONY_FABRICATOR
 
-/datum/design/material/rglassNew()
+/datum/design/material/rglass/New()
 	. = ..()
 	build_type |= COLONY_FABRICATOR
 
