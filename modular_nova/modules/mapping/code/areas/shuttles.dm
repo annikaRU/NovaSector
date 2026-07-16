@@ -1,13 +1,5 @@
 // Nova Sector shuttle areas
 
-/area/shuttle/prison_transport
-	name = "Prison Transporter NSS-74"
-
-/datum/map_template/shuttle/prison_transport
-	port_id = "prison_transport"
-	suffix = "nova"
-	name = "Prison Transporter NSS-74"
-
 /area/shuttle/blackmarket_burst
 	name = "Blackmarket Burst"
 
@@ -38,7 +30,7 @@
 	name = "Trader Ship Cargo Bay"
 
 /area/shuttle/escape/no_light
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 
 /area/shuttle/arrival/no_light
 	static_lighting = FALSE

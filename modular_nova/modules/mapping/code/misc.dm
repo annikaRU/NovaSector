@@ -46,7 +46,6 @@
 	fragments -= gone
 
 /obj/item/claymore/cutlass/luna/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(LAZYLEN(fragments))
 		to_chat(user, span_notice("You remove [src]'s array of addons."))
 		tool.play_tool_sound(src)
@@ -93,7 +92,7 @@
 	playsound(user, 'sound/items/weapons/resonator_blast.ogg', 90, TRUE)
 	sord_beam.fire()
 	user.apply_damage(25, STAMINA, BODY_ZONE_CHEST) // Spam these and pay the price of self-ownage
-	user.blood_volume -= 10 // 560 is normal blood volume
+	user.adjust_blood_volume(-10) // 560 is normal blood volume
 
 /// Upgrades ///
 
@@ -197,20 +196,6 @@
 	upgrade_appliable.demolition_mod = initial(upgrade_appliable.demolition_mod)
 	upgrade_appliable.armour_penetration = initial(upgrade_appliable.armour_penetration)
 	return ..()
-
-/obj/item/mod/module/armor_booster/retractplates
-	name = "MOD retractive plates module"
-	desc = "A complex set of actuators, micro-seals and a simple guide on how to install it, This... \"Modification\" allows the plating around the joints to retract, giving minor protection and a bit better mobility."
-	removable = TRUE
-	complexity = 1
-	space_slowdown = 0.25
-	armor_mod = /datum/armor/retractive_plates
-
-/datum/armor/retractive_plates
-	melee = 20
-	bullet = 25
-	laser = 15
-	energy = 20
 
 /obj/machinery/vending/security/noaccess
 	req_access = null

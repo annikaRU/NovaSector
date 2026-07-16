@@ -16,20 +16,22 @@
 	QDEL_NULL(cell)
 	return ..()
 
-/obj/item/organ/stomach/ethereal/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/stomach/ethereal/on_life(seconds_per_tick)
 	. = ..()
 	adjust_charge(-ETHEREAL_DISCHARGE_RATE * seconds_per_tick)
-	handle_charge(owner, seconds_per_tick, times_fired)
+	handle_charge(owner, seconds_per_tick)
 
 /obj/item/organ/stomach/ethereal/on_mob_insert(mob/living/carbon/stomach_owner)
 	. = ..()
 	RegisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
 	RegisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
+	RegisterSignal(stomach_owner, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool_act))
 
 /obj/item/organ/stomach/ethereal/on_mob_remove(mob/living/carbon/stomach_owner)
 	. = ..()
 	UnregisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+	UnregisterSignal(stomach_owner, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	stomach_owner.clear_mood_event("charge")
 	stomach_owner.clear_alert(ALERT_ETHEREAL_CHARGE)
 	stomach_owner.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
@@ -50,6 +52,24 @@
 	. = ethereal_shock_absorb(source, shock_damage, shock_source, siemens_coeff = 1, flags = NONE) //NOVA EDIT CHANGE - Ethereal Rework 2024 - This prevents the damage from the shocks.
 	to_chat(owner, span_notice("You absorb some of the shock into your body!"))
 
+/obj/item/organ/stomach/ethereal/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
+	SIGNAL_HANDLER
+
+	return multitool_act(user, tool)
+
+/obj/item/organ/stomach/ethereal/multitool_act(mob/living/user, obj/item/tool)
+	. = ..()
+	// Intentionally formatted in the exact same way as multitooling a cable for comedic effect.
+	// It's as if the multitool is mistaking the ethereal/biological battery for a cable.
+	var/power_info
+	if(cell.charge > 0)
+		power_info = span_danger("Total power: [display_power(cell.charge)]\nLoad: [(owner && (owner.stat != DEAD)) ? display_power(ETHEREAL_DISCHARGE_RATE) : 0]\nExcess power: [display_power(max(0, (cell.charge - ETHEREAL_CHARGE_FULL)))]")
+	else
+		power_info = span_danger("The [owner ? owner.name : name] is not powered.")
+
+	to_chat(user, power_info)
+	return ITEM_INTERACT_SUCCESS
+
 /**Changes the energy of the crystal stomach.
 * Args:
 * - amount: The change of the energy, in joules.
@@ -59,7 +79,7 @@
 	var/amount_changed = clamp(amount, ETHEREAL_CHARGE_NONE - cell.charge(), ETHEREAL_CHARGE_DANGEROUS - cell.charge())
 	return cell.change(amount_changed)
 
-/obj/item/organ/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick, times_fired)
+/obj/item/organ/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick)
 	switch(cell.charge())
 		if(-INFINITY to ETHEREAL_CHARGE_NONE)
 			carbon.add_mood_event("charge", /datum/mood_event/decharged)
@@ -70,13 +90,13 @@
 			carbon.add_mood_event("charge", /datum/mood_event/decharged)
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 3)
 			if(carbon.health > 10.5)
-				carbon.apply_damage(0.325 * seconds_per_tick, TOX, null, null, carbon)
+				carbon.apply_damage(0.325 * seconds_per_tick, damagetype = TOX)
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
 			carbon.add_mood_event("charge", /datum/mood_event/lowpower)
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 2)
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			carbon.add_mood_event("charge", /datum/mood_event/charged)
-			carbon.adjustToxLoss(-0.325 * seconds_per_tick, carbon) //NOVA EDIT ADDITION - Ethereal Rework 2024 - Your natural reward for no longer being over or under charged, but having it just right.
+			carbon.adjust_tox_loss(-0.325 * seconds_per_tick) //NOVA EDIT ADDITION - Ethereal Rework 2024 - Your natural reward for no longer being over or under charged, but having it just right.
 		if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
 			carbon.add_mood_event("charge", /datum/mood_event/overcharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 1)
@@ -84,7 +104,7 @@
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
 			carbon.add_mood_event("charge", /datum/mood_event/supercharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 2)
-			carbon.apply_damage(0.325 * seconds_per_tick, TOX, null, null, carbon)
+			carbon.apply_damage(0.325 * seconds_per_tick, damagetype = TOX)
 			if(SPT_PROB(5, seconds_per_tick)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(carbon)
 			// NOVA EDIT ADDITION BEGIN
@@ -110,7 +130,7 @@
 			var/mob/living/carbon/human/human = carbon
 			if(human.dna?.species)
 				//fixed_mut_color is also ethereal color (for some reason)
-				carbon.flash_lighting_fx(5, 7, human.dna.species.fixed_mut_color ? human.dna.species.fixed_mut_color : human.dna.features["mcolor"])
+				carbon.flash_lighting_fx(5, 7, human.dna.species.fixed_mut_color ? human.dna.species.fixed_mut_color : human.dna.features[FEATURE_MUTANT_COLOR])
 
 		playsound(carbon, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		carbon.cut_overlay(overcharge)

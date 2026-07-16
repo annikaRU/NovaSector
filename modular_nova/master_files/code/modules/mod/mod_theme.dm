@@ -14,10 +14,11 @@
 
 /// FOR MODSUIT DIGI SKINS GO TO THIS FILE!
 // modular_nova/master_files/icons/mob/clothing/modsuit/mod_clothing_mutant.dmi
-
 /datum/mod_theme/syndicate/deepspace
 	name = "deepspace"
 	default_skin = "deepspace"
+	armor_type = /datum/armor/mod_theme_security
+	ui_theme = "syndicate"
 	variants = list(
 		"deepspace" = list(
 			MOD_ICON_OVERRIDE = 'modular_nova/master_files/icons/obj/clothing/modsuit/mod_clothing.dmi',
@@ -164,6 +165,7 @@
 /datum/mod_theme/elite/admiral
 	name = "admiral"
 	default_skin = "admiral"
+	armor_type = /datum/armor/mod_theme_safeguard
 	variants = list(
 		"admiral" = list(
 			MOD_ICON_OVERRIDE = 'modular_nova/master_files/icons/obj/clothing/modsuit/mod_clothing.dmi',
@@ -458,8 +460,8 @@
 	)
 
 /datum/mod_theme/voskhod
-	name = "refitted voskhod"
-	desc = "A Heliostatic Coalition standard-issue heavy duty suit, designed for fortified positions operation and humanitarian aid."
+	name = "voskhod"
+	desc = "A Heliostatic Coalition standard-issue armored suit, designed for active mobile combat."
 	extended_desc = "A more expensive, yet more versatile replacement of the dated Voskhod powered armor, designed by the Magellanic Economic Corporate Union researchers \
 		in collaboration with and for the needs of the Heliostatic Coalition. An efficient implementation of mixed exoskeletons in between and underneath its armor plating \
 		allows for an unprecedented level of protection through an overly abundant use of durathread-backed plasteel plating; and the remnant materials of its predecessor allow for \
@@ -470,8 +472,8 @@
 		and a niche amongst the rimworld population."
 	default_skin = "voskhod"
 	armor_type = /datum/armor/mod_theme_voskhod
-	complexity_max = DEFAULT_MAX_COMPLEXITY //Five of which is occupied by the in-builts, thus it's closer to 10
-	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
+	slowdown_deployed = 0.45 //Faintly faster than Security
+	charge_drain = DEFAULT_CHARGE_DRAIN * 1.25
 	inbuilt_modules = list(
 		/obj/item/mod/module/status_readout/operational/voskhod,
 		/obj/item/mod/module/auto_doc,
@@ -528,10 +530,10 @@
 /datum/armor/mod_theme_voskhod
 	melee = 30
 	bullet = 40
-	laser = 20
-	energy = 30
-	bomb = 30
-	bio = 30
+	laser = 35
+	energy = 50
+	bomb = 40
+	bio = 100
 	fire = 80
 	acid = 85
 	wound = 20
@@ -984,88 +986,3 @@
 
 /datum/mod_theme/marines/noboost /// Marine modsuit that doenst allow you to put an armor booster in it. This makes it better than a base security hardsuit while worse than the HoS's and Captains- assuming those two have boosters in them.
 	desc = "Developed by Nanotrasen in collaboration with multiple high-profile contractors, this specialized suit was made for high-intensity combat. This one doesnt allow for an armor booster."
-
-/obj/item/mod/control/pre_equipped/marine
-	theme = /datum/mod_theme/marines
-	applied_cell = /obj/item/stock_parts/power_store/cell/bluespace
-	applied_modules = list(
-		/obj/item/mod/module/storage/large_capacity,
-		/obj/item/mod/module/emp_shield,
-		/obj/item/mod/module/magnetic_harness,
-		/obj/item/mod/module/holster,
-		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/noslip,
-		/obj/item/mod/module/power_kick,
-		/obj/item/mod/module/megaphone,
-		/obj/item/mod/module/springlock/contractor,
-		/obj/item/mod/module/dna_lock, //in lieu of req_access
-		/obj/item/mod/module/visor/sechud, //for identifying teammates also in suits
-	)
-	default_pins = list(
-		/obj/item/mod/module/holster,
-		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/power_kick,
-	)
-
-/obj/item/mod/control/pre_equipped/marine/engineer //smartgunner version of modsuit, with less versatile modules but the ALMIGHTY SMARTGUN
-	theme = /datum/mod_theme/marines
-	applied_cell = /obj/item/stock_parts/power_store/cell/bluespace
-	applied_modules = list(
-		/obj/item/mod/module/storage/large_capacity,
-		/obj/item/mod/module/emp_shield/advanced,
-		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/noslip,
-		/obj/item/mod/module/dna_lock,
-		/obj/item/mod/module/visor/sechud,
-		/obj/item/mod/module/smartgun/marines,
-	)
-	default_pins = list(
-		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/smartgun/marines,
-	)
-
-/obj/item/mod/control/pre_equipped/marine/damaged //'worn down' version, with less armor and no ERT/antag modules
-	theme = /datum/mod_theme/marines/damaged
-	applied_cell = /obj/item/stock_parts/power_store/cell/hyper
-	//removed modules: noslip, powerkick, megaphone
-	applied_modules = list(
-		/obj/item/mod/module/storage/large_capacity,
-		/obj/item/mod/module/emp_shield,
-		/obj/item/mod/module/magnetic_harness,
-		/obj/item/mod/module/holster,
-		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/springlock/contractor,
-		/obj/item/mod/module/dna_lock, //in lieu of req_access
-		/obj/item/mod/module/visor/sechud, //for identifying teammates also in suits
-	)
-	default_pins = list(
-		/obj/item/mod/module/holster,
-		/obj/item/mod/module/jetpack,
-	)
-
-/obj/item/mod/control/pre_equipped/marine/noboost
-	theme = /datum/mod_theme/marines/noboost
-	applied_cell = /obj/item/stock_parts/power_store/cell/bluespace
-	applied_modules = list(
-		/obj/item/mod/module/storage/large_capacity,
-		/obj/item/mod/module/emp_shield,
-		/obj/item/mod/module/magnetic_harness,
-		/obj/item/mod/module/welding/noboost,
-		/obj/item/mod/module/holster,
-		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/noslip,
-		/obj/item/mod/module/power_kick,
-		/obj/item/mod/module/megaphone,
-		/obj/item/mod/module/springlock/contractor,
-		/obj/item/mod/module/dna_lock,
-		/obj/item/mod/module/visor/sechud,
-	)
-	default_pins = list(
-		/obj/item/mod/module/holster,
-		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/power_kick,
-	)

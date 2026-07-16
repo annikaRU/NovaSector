@@ -11,7 +11,7 @@
 
 /datum/quirk/item_quirk/breather/plasma_breather/is_species_appropriate(datum/species/mob_species)
 	// slimeppl heal their blood volume rapidly from breathing plasma, this would be op
-	if(istype(mob_species, /datum/species/jelly) || istype(mob_species, /datum/species/plasmaman))
+	if(ispath(mob_species, /datum/species/jelly) || ispath(mob_species, /datum/species/plasmaman))
 		return FALSE
 	else
 		return ..()
@@ -34,7 +34,6 @@
 	target_lungs.add_gas_reaction(/datum/gas/oxygen, while_present = TYPE_PROC_REF(/obj/item/organ/lungs, too_much_oxygen))
 	target_lungs.add_gas_reaction(/datum/gas/oxygen, on_loss = TYPE_PROC_REF(/obj/item/organ/lungs, safe_oxygen))
 	// reflect correct lung flags
-	target_lungs.respiration_type = RESPIRATION_PLASMA
 
 /datum/quirk/item_quirk/breather/plasma_breather/remove()
 	. = ..()

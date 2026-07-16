@@ -6,14 +6,6 @@
 	prefix = "_maps/RandomRuins/IceRuins/nova/"
 /*----- Underground -----*/
 
-/datum/map_template/ruin/icemoon/underground/nova/mining_site_below
-	name = "Ice-ruin Mining Site Underground"
-	id = "miningsite-underground"
-	description = "The Iceminer arena."
-	prefix = "_maps/RandomRuins/IceRuins/nova/"
-	suffix = "icemoon_underground_mining_site.dmm"
-	always_place = TRUE
-
 /datum/map_template/ruin/icemoon/underground/nova/interdyne_base
 	name = "Ice-ruin Interdyne Pharmaceuticals Nova Sector Base 8817238"
 	id = "ice-base"
@@ -120,4 +112,13 @@
 	description = "A mishap during geological site testing ended a poor man's life. Anyways, Roll a d10 to loot the body."
 	prefix = "_maps/RandomRuins/IceRuins/nova/"
 	suffix = "icemoon_surface_geosite.dmm"
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/icemoon/nova/anchor_buoy
+	name = "Ice-Ruin Surface Anchor Buoy"
+	id = "nova-anchor-buoy-icemoon-1"
+	description = "A little one-way-launch navigation beacon for the charting of unexplored tundra."
+	suffix = "icemoon_beacon.dmm"
+	cost = 0
+	always_place = TRUE
 	allow_duplicates = FALSE

@@ -32,7 +32,21 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 	savefile_identifier = PREFERENCE_CHARACTER
 
 /datum/preference/choiced/attraction/init_possible_values()
-	return list("Gay", "Lesbian", "Straight", "Skolio", "Bi", "Pan", "Poly", "Omni", "Ace", "Aro", "Aro/Ace", "Unset", "Check OOC")
+	return list(
+		"Unset",
+		"Check OOC",
+		"Straight",
+		"Lesbian",
+		"Gay",
+		"Bisexual",
+		"Pansexual",
+		"Polysexual",
+		"Asexual",
+		"Aromantic",
+		"Aro/Ace",
+		"Skoliosexual",
+		"Omnisexual",
+	)
 
 /datum/preference/choiced/attraction/create_default_value()
 	return "Unset"
@@ -46,7 +60,24 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 	savefile_identifier = PREFERENCE_CHARACTER
 
 /datum/preference/choiced/display_gender/init_possible_values()
-	return list("Male", "Female", "Null", "Plural", "Nonbinary", "Omni", "Trans", "Andro", "Gyno", "Fluid", "Unset", "Check OOC")
+	return list(
+		"Unset",
+		"Check OOC",
+		"Male",
+		"Male - Femme",
+		"Male - Butch",
+		"Female",
+		"Female - Femme",
+		"Female - Butch",
+		"Nonbinary",
+		"Genderfluid",
+		"Trans",
+		"Andromorph",
+		"Gynomorph",
+		"Agender",
+		"Plural",
+		"Omnigender",
+	)
 
 /datum/preference/choiced/display_gender/create_default_value()
 	return "Unset"
@@ -216,7 +247,7 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 		if(ishuman(mob))
 			var/mob/living/carbon/human/human = mob
 			//If someone is obscured without flavor text visible, we don't want them on the Directory.
-			if((human.wear_mask && (human.wear_mask.flags_inv & HIDEFACE)) || (human.head && (human.head.flags_inv & HIDEFACE)) || (HAS_TRAIT(human, TRAIT_UNKNOWN)))
+			if((human.wear_mask && (human.wear_mask.flags_inv & HIDEFACE)) || (human.head && (human.head.flags_inv & HIDEFACE)) || (HAS_TRAIT(human, TRAIT_UNKNOWN_APPEARANCE)))
 				continue
 			//Display custom species, otherwise show base species instead
 			species = human.dna.features["custom_species"] || "Unset"

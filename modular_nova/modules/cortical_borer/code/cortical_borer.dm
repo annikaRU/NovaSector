@@ -94,7 +94,6 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	//because they are small, why can't they be held?
-	can_be_held = TRUE
 	///what chemicals borers know, starting with none
 	var/list/known_chemicals = list()
 	///what chemicals the borer can learn
@@ -218,6 +217,7 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 		squash_damage = 25, \
 		squash_flags = SQUASHED_DONT_SQUASH_IN_CONTENTS, \
 	)
+	AddElement(/datum/element/can_be_held)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT) //they need to be able to move around
 
 	var/matrix/borer_matrix = matrix(transform)
@@ -291,15 +291,15 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 	. += "2) [GLOB.objective_willing_hosts] willing hosts: [length(GLOB.willing_hosts)]/[GLOB.objective_willing_hosts]"
 	. += "3) [GLOB.objective_blood_borer] borers learning [GLOB.objective_blood_chem] chemicals from the blood: [GLOB.successful_blood_chem]/[GLOB.objective_blood_borer]"
 
-/mob/living/basic/cortical_borer/Life(seconds_per_tick, times_fired)
+/mob/living/basic/cortical_borer/Life(seconds_per_tick)
 	. = ..()
 	//can only do stuff when we are inside a LIVING human
 	if(!inside_human() || human_host?.stat == DEAD)
 		return
 
 	//there needs to be a negative to having a borer
-	if(prob(5 * host_harm_multiplier * ((upgrade_flags & BORER_STEALTH_MODE) ? 0.1 : 1)) && human_host.getToxLoss() <= (80 * host_harm_multiplier))
-		human_host.adjustToxLoss(5 * host_harm_multiplier, TRUE, TRUE)
+	if(prob(5 * host_harm_multiplier * ((upgrade_flags & BORER_STEALTH_MODE) ? 0.1 : 1)) && human_host.get_tox_loss() <= (80 * host_harm_multiplier))
+		human_host.adjust_tox_loss(5 * host_harm_multiplier, forced = TRUE)
 
 	human_host.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 
@@ -358,7 +358,7 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 	return FALSE
 
 /// Base mob environment handler for body temperature, overridden to take into consideration being inside a host
-/mob/living/basic/cortical_borer/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/mob/living/basic/cortical_borer/handle_environment(datum/gas_mixture/environment, seconds_per_tick)
 	var/loc_temp
 	if(human_host)
 		loc_temp = human_host.coretemperature // set the local temp to that of the host's core temp

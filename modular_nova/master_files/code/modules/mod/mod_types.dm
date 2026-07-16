@@ -22,38 +22,36 @@
 	)
 
 /obj/item/mod/control/pre_equipped/deepspace
+	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/power_store/cell/hyper
 	applied_modules = list(
-		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/storage,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/chameleon,
 	)
 	default_pins = list(
-		/obj/item/mod/module/armor_booster,
-		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/jump_jet,
 	)
 	theme = /datum/mod_theme/syndicate/deepspace
 
 /obj/item/mod/control/pre_equipped/deepspace_admiral
+	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/power_store/cell/hyper
 	applied_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/shock_absorber,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
-		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
 		/obj/item/mod/module/hat_stabilizer/syndicate,
-		/obj/item/mod/module/quick_cuff,
 	)
 	default_pins = list(
-		/obj/item/mod/module/armor_booster,
-		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/jump_jet,
 	)
 	theme = /datum/mod_theme/elite/admiral
@@ -204,9 +202,8 @@
 	icon = 'modular_nova/master_files/icons/obj/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "praetorian-control"
 	theme = /datum/mod_theme/blueshield
-	applied_cell = /obj/item/stock_parts/power_store/cell/high
 	applied_modules = list(
-		/obj/item/mod/module/storage,
+		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/projectile_dampener,
@@ -215,7 +212,7 @@
 	)
 
 /obj/item/mod/control/pre_equipped/interdyne/nerfed
-	theme = /datum/mod_theme/interdyne
+	theme = /datum/mod_theme/interdyne/nerfed
 	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/power_store/cell/super
 	applied_modules = list(
@@ -226,4 +223,3 @@
 		/obj/item/mod/module/tether,
 		/obj/item/mod/module/thread_ripper,
 	)
-

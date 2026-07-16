@@ -89,7 +89,6 @@
 /datum/loadout_item/mask/red_bandana
 	name = "Bandana (Red)"
 	item_path = /obj/item/clothing/mask/bandana/red
-
 /*
 *	BALACLAVAS
 */
@@ -130,6 +129,14 @@
 	name = "Half Mask Respirator"
 	item_path = /obj/item/clothing/mask/gas/respirator
 
+/datum/loadout_item/mask/cyborg_mask
+	name = "Cyborg Mask"
+	item_path = /obj/item/clothing/mask/gas/cyborg
+
+/datum/loadout_item/mask/gasmask_gags
+	name = "Gas Mask (Colorable)"
+	item_path = /obj/item/clothing/mask/gas/gags
+
 /*
 *	COSTUME
 */
@@ -157,6 +164,11 @@
 /datum/loadout_item/mask/owl
 	name = "Owl Mask"
 	item_path = /obj/item/clothing/mask/gas/owl_mask
+	group = "Costumes"
+
+/datum/loadout_item/mask/pink_clown_wig
+	name = "Pink Clown Wig"
+	item_path = /obj/item/clothing/mask/gas/pink_clown_wig
 	group = "Costumes"
 
 /datum/loadout_item/mask/paper
@@ -203,7 +215,7 @@
 /datum/loadout_item/mask/whistlesec
 	name = "Police Whistle"
 	item_path = /obj/item/clothing/mask/whistle
-	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_CORRECTIONS_OFFICER)
+	restricted_roles = list(ALL_JOBS_SEC)
 
 /*
 *	DONATOR

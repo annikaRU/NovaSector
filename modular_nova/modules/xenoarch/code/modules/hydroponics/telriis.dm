@@ -14,7 +14,7 @@
 	growthstages = 4
 	plant_icon_offset = 7
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/invasive)
-	reagents_add = list(/datum/reagent/consumable/milk = 0.1, /datum/reagent/consumable/soymilk = 0.1, /datum/reagent/consumable/korta_milk)
+	reagents_add = list(/datum/reagent/consumable/milk = 0.1, /datum/reagent/consumable/soymilk = 0.1, /datum/reagent/consumable/korta_milk = 0.1)
 
 /obj/item/food/grown/telriis
 	seed = /obj/item/seeds/telriis
@@ -25,5 +25,7 @@
 	filling_color = "#FF4500"
 	bite_consumption_mod = 0.5
 	foodtypes = FRUIT
-	juice_typepath = /datum/reagent/consumable/coconut_milk
 	tastes = list("milk" = 1)
+
+/obj/item/food/grown/telriis/juice_typepath()
+	return /datum/reagent/consumable/coconut_milk

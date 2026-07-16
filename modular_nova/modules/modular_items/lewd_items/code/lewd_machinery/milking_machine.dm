@@ -71,6 +71,9 @@
 // Object initialization
 /obj/structure/chair/milking_machine/Initialize(mapload)
 	. = ..()
+
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_SECONDARY)
+
 	milk_vessel = new()
 	milk_vessel.name = "MilkContainer"
 	milk_vessel.reagents.maximum_volume = MILKING_PUMP_MAX_CAPACITY
@@ -125,10 +128,6 @@
 	. = ..()
 	. += span_notice("What are these metal mounts on the armrests for...?")
 
-// formerly NO_DECONSTRUCTION
-/obj/structure/chair/milking_machine/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	return NONE
-
 /*
 *	APPEARANCE MANAGEMENT
 */
@@ -182,14 +181,13 @@
 			current_mob.handcuffed.forceMove(loc)
 			current_mob.handcuffed.dropped(current_mob)
 			current_mob.set_handcuffed(null)
-			current_mob.update_handcuffed()
 
 		var/obj/item/restraints/handcuffs/milker/cuffs = new (victim)
 		current_mob.set_handcuffed(cuffs)
 		cuffs.parent_chair = WEAKREF(src)
 		current_mob.update_abstract_handcuffed()
 
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 	affected_mob.layer = BELOW_MOB_LAYER
 	update_all_visuals()
 
@@ -247,7 +245,6 @@
 
 	update_mob_action_buttons() //some of our action buttons might be unusable when we're handcuffed.
 	update_worn_handcuffs()
-	update_hud_handcuffed()
 
 /obj/item/restraints/handcuffs/milker
 	name = "chair cuffs"
@@ -520,7 +517,7 @@
 
 	icon_state = "milking_[machine_color]_[current_mode]"
 
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 	update_icon_state()
 	update_icon()
 

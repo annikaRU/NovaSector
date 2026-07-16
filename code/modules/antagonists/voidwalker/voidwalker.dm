@@ -2,7 +2,7 @@
 /datum/antagonist/voidwalker
 	name = "\improper Voidwalker"
 	antagpanel_category = ANTAG_GROUP_ABOMINATIONS
-	job_rank = ROLE_VOIDWALKER
+	pref_flag = ROLE_VOIDWALKER
 
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Voidwalker"
@@ -22,8 +22,8 @@
 
 /datum/antagonist/voidwalker/get_preview_icon()
 	var/mob/living/basic/voidwalker/walker_type = /mob/living/basic/voidwalker
-	var/icon/icon = icon(walker_type::icon, walker_type::icon_state)
-	icon.Crop(5, 18, 30, 44)
+	var/datum/universal_icon/icon = uni_icon(walker_type::icon, walker_type::icon_state)
+	icon.crop(5, 18, 30, 44)
 	return finish_preview_icon(icon)
 
 /datum/antagonist/voidwalker/forge_objectives()

@@ -72,7 +72,7 @@
 /area/virtual_domain)
 "aZ" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/watermelon{
+/obj/item/food/grown/melonlike/watermelon{
 	pixel_y = 8;
 	pixel_x = 6
 	},
@@ -786,7 +786,7 @@
 /area/virtual_domain/fullbright)
 "iY" = (
 /obj/item/storage/bag/tray,
-/obj/item/food/grown/watermelon{
+/obj/item/food/grown/melonlike/watermelon{
 	pixel_y = 4;
 	pixel_x = -1
 	},
@@ -1124,11 +1124,11 @@
 /area/virtual_domain)
 "oq" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/watermelon{
+/obj/item/food/grown/melonlike/watermelon{
 	pixel_y = 13;
 	pixel_x = 6
 	},
-/obj/item/food/grown/watermelon{
+/obj/item/food/grown/melonlike/watermelon{
 	pixel_y = 8;
 	pixel_x = -4
 	},
@@ -2228,7 +2228,7 @@
 /obj/structure/sign/directions/medical/directional/north{
 	pixel_y = 29
 	},
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /turf/open/floor/wood/large,
 /area/virtual_domain)
 "BW" = (
@@ -2551,7 +2551,7 @@
 /turf/open/floor/wood,
 /area/virtual_domain)
 "Gp" = (
-/obj/structure/no_effect_signpost{
+/obj/structure/signpost{
 	pixel_y = 6;
 	desc = "Northwest: Hotel. South: Seaside Bar. East: Dressing Rooms."
 	},
@@ -3088,7 +3088,7 @@
 	pixel_y = 1;
 	pixel_x = 18
 	},
-/obj/item/stack/medical/gauze{
+/obj/item/stack/medical/wrap/gauze{
 	pixel_x = -15;
 	pixel_y = 10
 	},

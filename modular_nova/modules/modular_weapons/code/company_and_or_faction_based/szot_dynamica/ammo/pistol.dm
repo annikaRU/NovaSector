@@ -10,6 +10,7 @@
 
 	caliber = CALIBER_CESARZOWA
 	projectile_type = /obj/projectile/bullet/c27_54cesarzowa
+	ammo_stack_type = /obj/item/ammo_box/magazine/ammo_stack/c27_54cesarzowa
 
 /obj/item/ammo_casing/c27_54cesarzowa/Initialize(mapload)
 	. = ..()
@@ -18,14 +19,14 @@
 
 /obj/projectile/bullet/c27_54cesarzowa
 	name = ".27-54 Cesarzowa piercing bullet"
-	damage = 30
+	damage = 15
 	armour_penetration = 30
-	wound_bonus = 5
-	exposed_wound_bonus = 10
+	wound_bonus = -20
+	exposed_wound_bonus = 20 // if we're hitting exposed, the negative should be canceled by the exposure? maybe? probably.
 
 /obj/item/ammo_box/c27_54cesarzowa
 	name = "ammo box (.27-54 Cesarzowa piercing)"
-	desc = "A box of .27-54 Cesarzowa piercing pistol rounds, holds twenty eight cartridges."
+	desc = "A box of .27-54 Cesarzowa piercing pistol rounds, holds twenty four cartridges."
 
 	icon = 'modular_nova/modules/modular_weapons/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
 	icon_state = "27-54cesarzowa_box"
@@ -36,7 +37,7 @@
 
 	caliber = CALIBER_CESARZOWA
 	ammo_type = /obj/item/ammo_casing/c27_54cesarzowa
-	max_ammo = 28
+	max_ammo = 24
 
 // .27-54 Cesarzowa rubber
 // Small caliber pistol round meant to be fired out of something that shoots real quick like, this one is less lethal
@@ -47,13 +48,12 @@
 
 	icon_state = "27-54cesarzowa_rubber"
 	ammo_categories = AMMO_CLASS_NONE
-	print_cost = 0
 	projectile_type = /obj/projectile/bullet/c27_54cesarzowa/rubber
 
 /obj/projectile/bullet/c27_54cesarzowa/rubber
 	name = ".27-54 Cesarzowa rubber bullet"
-	stamina = 20
-	damage = 10
+	stamina = 18
+	damage = 5
 	weak_against_armour = TRUE
 	wound_bonus = -30
 	exposed_wound_bonus = -10
@@ -61,7 +61,7 @@
 
 /obj/item/ammo_box/c27_54cesarzowa/rubber
 	name = "ammo box (.27-54 Cesarzowa rubber)"
-	desc = "A box of .27-54 Cesarzowa rubber pistol rounds, holds twenty eight cartridges."
+	desc = "A box of .27-54 Cesarzowa rubber pistol rounds, holds twenty four cartridges."
 
 	icon_state = "27-54cesarzowa_box_rubber"
 

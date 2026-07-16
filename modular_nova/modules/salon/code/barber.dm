@@ -1,7 +1,6 @@
 /datum/job/barber
 	title = JOB_BARBER
 	description = "Run your salon and meet the crews sanitary needs, such as hair cutting, massaging and more!"
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
@@ -14,7 +13,7 @@
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
-	display_order = JOB_DISPLAY_ORDER_BARTENDER
+	display_order = JOB_DISPLAY_ORDER_BARBER
 	bounty_types = CIV_JOB_BASIC
 	departments_list = list(
 		/datum/job_department/service,
@@ -31,9 +30,10 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/modular_computer/pda
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/barber
+	uniform = /obj/item/clothing/under/rank/civilian/barber
 	shoes = /obj/item/clothing/shoes/laceup
 	id_trim = /datum/id_trim/job/barber
+	skillchips = list(/obj/item/skillchip/hair_expert)
 
 /obj/structure/closet/secure_closet/barber
 	name = "barber's locker"

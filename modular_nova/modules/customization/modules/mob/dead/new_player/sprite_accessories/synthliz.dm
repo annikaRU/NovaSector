@@ -1,12 +1,11 @@
 //Synth snouts (This is the most important part)
 /datum/sprite_accessory/snouts/synthliz
-	recommended_species = list()
+	recommended_species = null
 	icon = 'modular_nova/master_files/icons/mob/sprite_accessory/synthliz_snouts.dmi'
 	color_src = USE_ONE_COLOR
 	default_color = null
 	name = "Synthetic Lizard - Snout"
 	icon_state = "synthliz_basic"
-	genetic = FALSE
 
 /datum/sprite_accessory/snouts/synthliz/synthliz_under
 	color_src = USE_MATRIXED_COLORS
@@ -72,13 +71,12 @@
 
 //Synth tails
 /datum/sprite_accessory/tails/synthliz
-	recommended_species = list()
+	recommended_species = null
 	icon = 'modular_nova/master_files/icons/mob/sprite_accessory/synthliz_tails.dmi'
 	color_src = USE_ONE_COLOR
 	name = "Synthetic Lizard"
 	icon_state = "synthliz"
 	flags_for_organ = SPRITE_ACCESSORY_WAG_ABLE
-	genetic = FALSE
 	spine_key = SPINE_KEY_LIZARD
 
 //Synth Antennae
@@ -144,9 +142,8 @@
 /datum/sprite_accessory/taur/synthliz
 	name = "Cybernetic Lizard"
 	icon_state = "synthlizard"
-	taur_mode = STYLE_TAUR_PAW
-	recommended_species = list()
-	genetic = FALSE
+	taur_mode = BODYSHAPE_TAUR_PAW
+	recommended_species = null
 	organ_type = /obj/item/organ/taur_body/horselike/synth
 	can_lay_down = TRUE
 	laydown_offset = -3
@@ -170,8 +167,8 @@
 /datum/sprite_accessory/taur/synthliz/horse
 	name = "Cybernetic Horse"
 	icon_state = "synthhorse"
-	taur_mode = STYLE_TAUR_HOOF
-	alt_taur_mode = STYLE_TAUR_PAW
+	taur_mode = BODYSHAPE_TAUR_HOOF
+	alt_taur_mode = BODYSHAPE_TAUR_PAW
 	can_lay_down = TRUE
 	laydown_offset = -3
 
@@ -194,17 +191,18 @@
 /datum/sprite_accessory/taur/synthliz/synthnaga
 	name = "Cybernetic Naga"
 	icon_state = "synthnaga"
-	taur_mode = STYLE_TAUR_SNAKE
+	taur_mode = BODYSHAPE_TAUR_SNAKE
 	organ_type = /obj/item/organ/taur_body/serpentine/synth
 
 /datum/sprite_accessory/taur/synthliz/biglegs
 	name = "Synthetic Big Legs"
 	icon_state = "biglegs"
-	taur_mode = STYLE_TAUR_PAW
+	taur_mode = BODYSHAPE_TAUR_BIG_LEGS
 	organ_type = /obj/item/organ/taur_body/anthro/synth
 
 /datum/sprite_accessory/taur/synthliz/biglegs/stanced
 	name = "Synthetic Big Legs (Stanced)"
+	taur_mode = BODYSHAPE_TAUR_BIG_LEGS_STANCED
 	icon_state = "biglegs_stanced"
 
 /datum/sprite_accessory/taur/synthliz/biglegs/bird

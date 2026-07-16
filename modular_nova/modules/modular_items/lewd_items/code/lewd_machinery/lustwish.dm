@@ -40,11 +40,12 @@
 
 				/obj/item/kinky_shocker = 4,
 				/obj/item/clothing/mask/leatherwhip = 4,
-				/obj/item/bdsm_candle = 4,
+				/obj/item/bdsm_candle = 8,
 				/obj/item/spanking_pad = 4,
 				/obj/item/tickle_feather = 8,
 				/obj/item/borg/upgrade/dominatrixmodule = 5,
 				/obj/item/reagent_containers/venom_milker = 5,
+				/obj/item/petclicker = 4,
 			),
 		),
 		list(
@@ -52,9 +53,13 @@
 			"icon" = FA_ICON_SHIRT,
 			"products" = list(
 				/obj/item/clothing/under/pants/nova/chaps = 4,
+				/obj/item/clothing/under/costume/playbunny/greyscale = 5,
 				/obj/item/clothing/under/costume/bunnylewd = 5,
 				/obj/item/clothing/under/costume/bunnylewd/white = 5,
-				/obj/item/clothing/head/costume/rabbitears = 4,//Ears together, right after Bunny Suit.
+				/obj/item/clothing/head/costume/rabbitears = 5,//Ears together, right after Bunny Suit.
+				/obj/item/clothing/head/playbunnyears = 5,
+				/obj/item/clothing/suit/jacket/tailcoat = 5,
+				/obj/item/clothing/neck/tie/bunnytie = 5,
 				/obj/item/clothing/head/costume/kitty = 4,
 
 				/obj/item/clothing/head/domina_cap = 5,
@@ -72,7 +77,6 @@
 				/obj/item/clothing/head/costume/nova/maid = 5,
 				/obj/item/clothing/under/costume/maid = 5,
 				/obj/item/clothing/under/rank/civilian/janitor/maid = 5,
-				/obj/item/clothing/under/costume/lewdmaid = 5,
 				/obj/item/clothing/suit/corset = 5,
 
 				/obj/item/clothing/under/tearaway_garments = 5,
@@ -194,6 +198,7 @@
 	payment_department = ACCOUNT_SRV
 	default_price = PAYCHECK_CREW * 0.6
 	extra_price = PAYCHECK_COMMAND * 2.5
+	allow_custom = TRUE
 
 //Changes the settings on the vendor, if the user uses the discount card.
 /obj/machinery/vending/dorms/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)

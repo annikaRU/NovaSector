@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	name = "\improper Space Wizard"
 	roundend_category = "wizards/witches"
 	antagpanel_category = ANTAG_GROUP_WIZARDS
-	job_rank = ROLE_WIZARD
+	pref_flag = ROLE_WIZARD
 	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 0.5
@@ -28,8 +28,6 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/datum/action/cooldown/grand_ritual/ritual
 	/// Perks that wizard learn
 	var/list/perks = list()
-	/// Button that hide perks hud.
-	var/atom/movable/screen/perk/more/compact_button
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
@@ -49,12 +47,12 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard_minion/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/current_mob = mob_override || owner.current
-	current_mob.faction |= ROLE_WIZARD
+	current_mob.add_faction(ROLE_WIZARD)
 	add_team_hud(current_mob)
 
 /datum/antagonist/wizard_minion/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/last_mob = mob_override || owner.current
-	last_mob.faction -= ROLE_WIZARD
+	last_mob.remove_faction(ROLE_WIZARD)
 
 /datum/antagonist/wizard_minion/on_gain()
 	create_objectives()
@@ -84,7 +82,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		CRASH("Wizard datum with no owner.")
 	assign_ritual()
 	equip_wizard()
-	owner.current.add_quirk(/datum/quirk/introvert, announce = FALSE)
+	owner.current.add_personality(/datum/personality/introvert)
+	owner.current.add_personality(/datum/personality/callous) // no sense of right and wrong
 	if(give_objectives)
 		create_objectives()
 	if(move_to_lair)
@@ -234,13 +233,13 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/wizard_mob = mob_override || owner.current
-	wizard_mob.faction |= ROLE_WIZARD
+	wizard_mob.add_faction(ROLE_WIZARD)
 	add_team_hud(wizard_mob)
 	ritual?.Grant(owner.current)
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/wizard_mob = mob_override || owner.current
-	wizard_mob.faction -= ROLE_WIZARD
+	wizard_mob.remove_faction(ROLE_WIZARD)
 	if (ritual)
 		ritual.Remove(wizard_mob)
 		UnregisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE)
@@ -457,3 +456,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	parts += printplayerlist(members - master_wizard.owner)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/antagonist/wizard/on_respawn(mob/new_character)
+	new_character.forceMove(pick(GLOB.wizardstart))
+	equip_wizard()
+	return TRUE

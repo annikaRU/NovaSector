@@ -75,6 +75,11 @@
  * @param ruin_type The type of ruins that are spawning (ZTRAIT_SPACE_RUINS, ZTRAIT_ICE_RUINS, ZTRAIT_LAVA_RUINS, etc.)
  */
 /proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE, mineral_budget = 15, mineral_budget_update, ruins_type = ZTRAIT_STATION)
+#if defined(CIBUILDING) && !defined(OPENDREAM)
+	if(SSmapping.current_map.is_unit_test_map && PERFORM_ALL_TESTS(maptest_log_mapping) )
+		return log_mapping("Skipping ruin seeding due to running on unit test map in workflow enviorment.")
+#endif
+
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
 		return
@@ -91,7 +96,7 @@
 	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
 	var/list/ruins_available = list() //we can try these in the current pass
 
-	if(PERFORM_ALL_TESTS(log_mapping))
+	if(PERFORM_ALL_TESTS(maptest_log_mapping))
 		log_mapping("All ruins being loaded for map testing.")
 
 	switch(mineral_budget_update) //If we use more map configurations, add another case
@@ -104,7 +109,7 @@
 	for(var/key in ruins)
 		var/datum/map_template/ruin/R = ruins[key]
 
-		if(PERFORM_ALL_TESTS(log_mapping))
+		if(PERFORM_ALL_TESTS(maptest_log_mapping))
 			R.cost = 0
 			R.allow_duplicates = FALSE // no multiples for testing
 			R.always_place = !R.unpickable // unpickable ruin means it spawns as a set with another ruin
@@ -206,7 +211,14 @@
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
 
 
-			log_mapping("Successfully placed [current_pick.name] ruin.")
+			var/bottom_left_x = placed_turf.x - round(current_pick.width/2)
+			var/bottom_left_y = placed_turf.y - round(current_pick.height/2)
+			var/top_right_x = bottom_left_x + current_pick.width - 1
+			var/top_right_y = bottom_left_y + current_pick.height - 1
+			log_mapping("Successfully placed [current_pick.name] ruin ([bottom_left_x],[bottom_left_y],[placed_turf.z] to [top_right_x],[top_right_y],[placed_turf.z]).")
+
+			///Keep track of the active ruins so we can take it in account for map generation. Using bottom lef turf as key
+			SSmapping.active_ruins[locate(bottom_left_x, bottom_left_y, placed_turf.z)] = current_pick
 
 		//Update the available list
 		for(var/datum/map_template/ruin/R in ruins_available)

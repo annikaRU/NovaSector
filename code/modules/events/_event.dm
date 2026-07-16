@@ -1,4 +1,4 @@
-#define RANDOM_EVENT_ADMIN_INTERVENTION_TIME (3 MINUTES) // NOVA EDIT CHANGE - ORIGINAL: #define RANDOM_EVENT_ADMIN_INTERVENTION_TIME (10 SECONDS)
+#define RANDOM_EVENT_ADMIN_INTERVENTION_TIME (3 MINUTES) // NOVA EDIT CHANGE - ORIGINAL: #define RANDOM_EVENT_ADMIN_INTERVENTION_TIME (20 SECONDS)
 
 //this singleton datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
@@ -31,9 +31,6 @@
 	var/max_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
 
 	var/triggering //admin cancellation
-
-	/// Whether or not dynamic should hijack this event
-	var/dynamic_should_hijack = FALSE
 
 	/// Datum that will handle admin options for forcing the event.
 	/// If there are no options, just leave it as an empty list.
@@ -82,9 +79,6 @@
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
 		return FALSE
 	if(ispath(typepath, /datum/round_event/ghost_role) && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))
-		return FALSE
-
-	if (dynamic_should_hijack && SSdynamic.random_event_hijacked != HIJACKED_NOTHING)
 		return FALSE
 
 	return TRUE
@@ -170,7 +164,6 @@ Runs the event
 	round_event.setup()
 	round_event.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	occurrences++
-	SSevents.previously_run += src // NOVA EDIT ADDITION
 
 	if(announce_chance_override != null)
 		round_event.announce_chance = announce_chance_override

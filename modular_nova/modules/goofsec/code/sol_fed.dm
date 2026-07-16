@@ -311,25 +311,6 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 	suicide_cry = "FOR THE SOL FEDERATION!!"
 	var/department = "Some stupid shit"
 
-/datum/antagonist/ert/request_911/apply_innate_effects(mob/living/mob_override)
-	..()
-	var/mob/living/M = mob_override || owner.current
-	if(M.hud_used)
-		var/datum/hud/H = M.hud_used
-		var/atom/movable/screen/wanted/giving_wanted_lvl = new /atom/movable/screen/wanted(null, H)
-		H.wanted_lvl = giving_wanted_lvl
-		H.infodisplay += giving_wanted_lvl
-		H.mymob.client.screen += giving_wanted_lvl
-
-
-/datum/antagonist/ert/request_911/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	if(M.hud_used)
-		var/datum/hud/H = M.hud_used
-		H.infodisplay -= H.wanted_lvl
-		QDEL_NULL(H.wanted_lvl)
-	..()
-
 /datum/antagonist/ert/request_911/greet()
 	var/missiondesc =  ""
 	missiondesc += "<B><font size=5 color=red>You are NOT a Nanotrasen Employee. You work for the Sol Federation as a [role].</font></B>"
@@ -367,7 +348,7 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 			ID_to_give.registered_age = human_to_equip.age
 		ID_to_give.update_label()
 		ID_to_give.update_icon()
-		human_to_equip.sec_hud_set_ID()
+		human_to_equip.update_ID_card()
 
 /*
 *	POLICE
@@ -474,7 +455,7 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 	name = "\improper SolFed adv. Medical headset"
 	desc = "A headset used by the Solar Federation response teams."
 	icon_state = "med_headset"
-	keyslot = /obj/item/encryptionkey/headset_solfed/atmos
+	keyslot = /obj/item/encryptionkey/headset_solfed/med
 	radio_talk_sound = 'modular_nova/modules/radiosound/sound/radio/security.ogg'
 
 /obj/item/encryptionkey/headset_solfed/med
@@ -503,22 +484,24 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 	shoes = /obj/item/clothing/shoes/jackboots
 	ears = /obj/item/radio/headset/headset_solfed/med
 	mask = /obj/item/clothing/mask/gas/alt
+	glasses = /obj/item/clothing/glasses/hud/health
 	head = /obj/item/clothing/head/helmet/toggleable/sf_hardened/emt
 	id = /obj/item/card/id/advanced/solfed
 	suit = /obj/item/clothing/suit/armor/sf_hardened/emt
 	gloves = /obj/item/clothing/gloves/latex/nitrile
-	belt = /obj/item/storage/backpack/duffelbag/deforest_medkit/stocked
+	belt = /obj/item/storage/backpack/duffelbag/deforest_paramedic/stocked
 	suit_store = /obj/item/tank/internals/emergency_oxygen/engi
 	r_pocket = /obj/item/flashlight/seclite
 	l_pocket = /obj/item/storage/medkit/civil_defense
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
 		/obj/item/emergency_bed = 1,
+		/obj/item/storage/box/medipens = 1,
 		/obj/item/solfed_reporter/swat_caller = 1,
 		/obj/item/beamout_tool = 1,
 	)
 
-	id_trim = /datum/id_trim/solfed
+	id_trim = /datum/id_trim/solfed/med
 
 /datum/antagonist/ert/request_911/condom_destroyer
 	name = "Armed S.W.A.T. Officer"
@@ -875,20 +858,19 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 					message_admins("[ADMIN_LOOKUPFLW(user)] has beamed out [living_user.pulling] alongside them.")
 				var/turf/pulling_turf = get_turf(living_user.pulling)
 				playsound(pulling_turf, 'sound/effects/magic/Repulse.ogg', 100, 1)
-				var/datum/effect_system/spark_spread/quantum/sparks = new
-				sparks.set_up(10, 1, pulling_turf)
-				sparks.attach(pulling_turf)
-				sparks.start()
+				do_sparks(10, TRUE, pulling_turf, spark_type = /datum/effect_system/basic/spark_spread/quantum)
 				qdel(living_user.pulling)
 			var/turf/user_turf = get_turf(living_user)
 			playsound(user_turf, 'sound/effects/magic/Repulse.ogg', 100, 1)
-			var/datum/effect_system/spark_spread/quantum/sparks = new
-			sparks.set_up(10, 1, user_turf)
-			sparks.attach(user_turf)
-			sparks.start()
+			do_sparks(10, TRUE, user_turf, spark_type = /datum/effect_system/basic/spark_spread/quantum)
 			qdel(user)
 	else
 		user.balloon_alert(user, "beam-out cancelled")
+
+#undef SOLFED_AMT
+#undef SOLFED_VOTES
+#undef SOLFED_DECLARED
+#undef SOLFED_FINE_AMOUNT
 
 #undef EMERGENCY_RESPONSE_POLICE
 #undef EMERGENCY_RESPONSE_ATMOS

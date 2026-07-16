@@ -13,8 +13,12 @@
 	var/list/try_hide_mutant_parts
 	/// The Examine Panel datum for the mob.
 	var/datum/examine_panel/mob_examine_panel
+	/// The Genital Layering panel for the mob.
+	var/datum/genital_layering_panel/genital_layering_panel
 	// Whether or not the human has emissive eyes
 	var/emissive_eyes
+	// Whether or not the human has emissive hair
+	var/emissive_hair
 	/// Chance for oversized to wound someone smaller, if they try to piggyback ride them.
 	var/oversized_piggywound_chance = 50
 	/// Base damage for oversized piggyback riding.

@@ -1,36 +1,36 @@
 /datum/escape_menu/show_home_page()
 	. = ..()
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/text/clickable/home_button/opfor(
+		new /atom/movable/screen/escape_menu/text/clickable/opfor(
 			null,
 			/* hud_owner = */ null,
 			/* hud_owner = */ src,
 			/* button_text = */ "OPFOR",
-			/* offset = */ list(-276, -260),
+			/* offset = */ list(-276, 30),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_opfor)),
 		)
 	)
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/text/clickable/leave_body/(
+		new /atom/movable/screen/escape_menu/text/clickable/leave_body(
 			null,
 			/* hud_owner = */ null,
 			/* hud_owner = */ src,
 			/* button_text = */ "Ghost",
-			/* offset = */ list(-311, -260),
+			/* offset = */ list(-311, 30),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_ghost)),
 		)
 	)
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/text/clickable/home_button/respawn(
+		new /atom/movable/screen/escape_menu/text/clickable/respawn(
 			null,
 			/* hud_owner = */ null,
 			/* hud_owner = */ src,
 			/* button_text = */ "Respawn",
-			/* offset = */ list(-346, -260),
+			/* offset = */ list(-346, 30),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_respawn)),
 		)
@@ -57,41 +57,30 @@
 	living_user?.opposing_force()
 	qdel(src)
 
-/atom/movable/screen/escape_menu/text/clickable/home_button/respawn
-
 /datum/escape_menu/proc/respawn()
 	PRIVATE_PROC(TRUE)
 
 	var/mob/living/client_mob = client?.mob
 	client_mob?.abandon_mob()
 
-/atom/movable/screen/escape_menu/text/clickable/home_button/respawn/Initialize(
-	mapload,
-	datum/escape_menu/escape_menu,
-	button_text,
-	offset,
-	on_click_callback,
-)
-	. = ..()
-
-/atom/movable/screen/escape_menu/text/clickable/home_button/respawn/enabled()
+/atom/movable/screen/escape_menu/text/clickable/respawn/enabled()
 	if (!..())
 		return FALSE
 
 	return !isliving(escape_menu.client?.mob)
 
-/atom/movable/screen/escape_menu/text/clickable/home_button/opfor
-
-/atom/movable/screen/escape_menu/text/clickable/home_button/opfor/Initialize(
+/atom/movable/screen/escape_menu/text/clickable/opfor/Initialize(
 	mapload,
+	datum/hud/hud_owner,
 	datum/escape_menu/escape_menu,
 	button_text,
-	offset,
-	on_click_callback,
+	list/offset,
+	font_size = 24,
 )
 	. = ..()
+	src.maptext_width = max(round(length(button_text) * font_size * 0.75), font_size * 5) // more generous scaling so the all-caps fits. this sucks but it works
 
-/atom/movable/screen/escape_menu/text/clickable/clickable/home_button/opfor/enabled()
+/atom/movable/screen/escape_menu/text/clickable/opfor/enabled()
 	if (!..())
 		return FALSE
 
